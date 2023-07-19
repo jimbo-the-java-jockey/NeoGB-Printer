@@ -148,13 +148,14 @@ void setup(void){
   #else
   if(!testmode && (digitalRead(BTN_PUSH) == HIGH)){
   #endif
-    testmode = true;
+    bootAsPrinter = false; // boot in server mode
     #ifdef USE_OLED
-      oledStateChange(99); //Test
+      oledStateChange(0);
     #endif
   }else{
+    bootAsPrinter = true;
     #ifdef USE_OLED
-      oledStateChange(0); //Splash Screen
+      oledStateChange(0);
     #endif 
   }
   
@@ -179,11 +180,11 @@ void setup(void){
     setupImages(); //Get the Image Scale Factors from config file
     
     //Check the bootMode (Printer mode or WiFi mode)
-    #ifdef ENABLE_WEBSERVER
+    /* #ifdef ENABLE_WEBSERVER
       bootAsPrinter = fs_alternateBootMode();
     #else
       bootAsPrinter = true;
-    #endif
+    #endif*/ 
 
     //Get the % of use and the next image ID. If full boot as Server
     uint8_t percUsed = fs_info();
